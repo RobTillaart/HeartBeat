@@ -1,10 +1,10 @@
 //
 //    FILE: randomHeartBeat.ino
 //  AUTHOR: Rob Tillaart 
-// VERSION: 0.1.0
+// VERSION: 0.1.1
 // PURPOSE: demo
 
-#include "heartbeat.h"
+#include "HeartBeat.h"
 
 Heartbeat HB;
 

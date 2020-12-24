@@ -1,12 +1,10 @@
 //
 //    FILE: arrayHeartBeat.ino
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.1.0
+// VERSION: 0.1.1
 // PURPOSE: demo
-//
-// HISTORY: 2019-06-12 initial version
 
-#include "heartbeat.h"
+#include "HeartBeat.h"
 
 Heartbeat HB[3];
 

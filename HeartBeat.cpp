@@ -1,7 +1,7 @@
 //
 //    FILE: HeartBeat.cpp
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.1.0
+// VERSION: 0.1.1
 // PURPOSE: HeartBeat library for Arduino
 //    DATE: 2019-06-12
 //     URL: https://github.com/RobTillaart/HeartBeat
