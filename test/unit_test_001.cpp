@@ -68,7 +68,7 @@ unittest(test_constructor)
     HB.beat();
   }
   
-  assertEqual(8, state->digitalPin[1].queueSize));
+  assertEqual(8, state->digitalPin[13].queueSize());
   bool expected[8] = {LOW, HIGH, LOW, HIGH, LOW, HIGH, LOW, HIGH};
   bool actual[8];
   int  changes = state->digitalPin[13].toArray(actual, 8);
