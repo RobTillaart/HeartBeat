@@ -1,4 +1,10 @@
-# HeartBeat Library
+
+[![Arduino CI](https://github.com/RobTillaart/HeartBeat/workflows/Arduino%20CI/badge.svg)](https://github.com/marketplace/actions/arduino_ci)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/RobTillaart/HeartBeat/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/RobTillaart/HeartBeat.svg?maxAge=3600)](https://github.com/RobTillaart/HeartBeat/releases)
+
+
+# HeartBeat
 
 Arduino library for a simple HeartBeat 
 
@@ -43,15 +49,20 @@ Not calling **beat()** effectively stops the hearbeat.
 ## Applications
 
 Applications include but are not limited to
-- show an alive sign, typical freq of 1Hz
+- show an alive sign, typical freq of 1Hz is sufficient.
 - show error code by means of different frequencies.
   - 1 Hz = OK
   - 2 Hz = Warning
   - 5 Hz = Error
-- indicate power usage by increasing heartbeat
+- indicate power usage by increasing heartbeat e.g. round(amps) 
 - indicate sound volume by increasing heartbeat
 - indicate changing distant by hearbeat
 - geiger counter style.
+- 
+
+## Todo
+
+- add dutycycle, on/off ratio
 - 
 
 ## Operation

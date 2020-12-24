@@ -4,10 +4,11 @@
 // VERSION: 0.1.0
 // PURPOSE: HeartBeat library for Arduino
 //    DATE: 2019-06-12
+//     URL: https://github.com/RobTillaart/HeartBeat
 //
-// HISTORY:
-// 0.1.0 - 2019-06-12 initial version
-//
+//  HISTORY:
+//  0.1.0   2019-06-12  initial version
+//  0.1.1   2020-12-24  arduino-CI 
 
 #include "HeartBeat.h"
 
