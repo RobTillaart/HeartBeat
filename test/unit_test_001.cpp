@@ -71,7 +71,7 @@ unittest(test_constructor)
   assertEqual(8, state->digitalPin[1].queueSize));
   bool expected[8] = {LOW, HIGH, LOW, HIGH, LOW, HIGH, LOW, HIGH};
   bool actual[8];
-  int  changes = state->digitalPin[myPin].toArray(actual, 6);
+  int  changes = state->digitalPin[13].toArray(actual, 8);
   assertEqual(8, changes);
 
   // verify each element

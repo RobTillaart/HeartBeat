@@ -4,7 +4,7 @@
 // VERSION: 0.1.1
 // PURPOSE: demo
 
-#include "HeartBeat.h.h"
+#include "HeartBeat.h"
 
 Heartbeat HB;
 
