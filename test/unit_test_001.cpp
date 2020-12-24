@@ -55,6 +55,8 @@ unittest(test_new_operator)
 
 unittest(test_constructor)
 {
+  fprintf(stderr, "VERSION: %s\n", HEARTBEAT_LIB_VERSION );
+
   GodmodeState* state = GODMODE();
   state->reset();
 
