@@ -58,7 +58,7 @@ unittest(test_constructor)
   GodmodeState* state = GODMODE();
   state->reset();
 
-  HeartBeat HB;
+  Heartbeat HB;
   HB.begin(13, 4);
 
   uint32_t start = millis();
