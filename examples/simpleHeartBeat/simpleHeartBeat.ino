@@ -1,12 +1,14 @@
 //
 //    FILE: simpleHeartBeat.ino
 //  AUTHOR: Rob Tillaart 
-// VERSION: 0.1.1
 // PURPOSE: demo
+
 
 #include "HeartBeat.h"
 
-Heartbeat HB;
+
+HeartBeat HB;
+
 
 void setup() 
 {
@@ -17,11 +19,13 @@ void setup()
   HB.begin(13, 3);  // PIN 13 with frequency 3
 }
 
+
 void loop()
 {
   HB.beat();
 
   // do other stuff here
 }
+
 
 // -- END OF FILE --
