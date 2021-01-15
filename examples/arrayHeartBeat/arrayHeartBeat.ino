@@ -1,12 +1,14 @@
 //
 //    FILE: arrayHeartBeat.ino
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.1.1
 // PURPOSE: demo
+
 
 #include "HeartBeat.h"
 
-Heartbeat HB[3];
+
+HeartBeat HB[3];
+
 
 void setup()
 {
@@ -18,6 +20,7 @@ void setup()
   HB[1].begin(12, 3);
   HB[2].begin(13, 5);
 }
+
 
 void loop()
 {

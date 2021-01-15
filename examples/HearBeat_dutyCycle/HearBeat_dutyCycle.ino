@@ -1,5 +1,5 @@
 //
-//    FILE: sinusHeartBeat.ino
+//    FILE: HearBeat_dutyCycle.ino
 //  AUTHOR: Rob Tillaart 
 // PURPOSE: demo
 
@@ -9,7 +9,6 @@
 
 HeartBeat HB;
 
-int frequency = 1;
 
 void setup() 
 {
@@ -17,7 +16,8 @@ void setup()
   Serial.println(__FILE__);
   Serial.println(HEARTBEAT_LIB_VERSION);
 
-  HB.begin(13, frequency);
+  HB.begin(13, 3);        // PIN 13 with frequency 3
+  HB.setDutyCycle(10.0);  // 10% time high
 }
 
 
@@ -25,10 +25,8 @@ void loop()
 {
   HB.beat();
 
-  float f = 5 * (1 + sin(millis()/10000));
-  HB.set(f);
-  
   // do other stuff here
 }
+
 
 // -- END OF FILE --

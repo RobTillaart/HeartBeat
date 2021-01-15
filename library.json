@@ -1,7 +1,7 @@
 {
   "name": "HeartBeat",
   "keywords": "HeartBeat, blinking led, polling",
-  "description": "Arduino library for a heartbeat function.",
+  "description": "Arduino library for HeartBeat with frequency and dutyCycle.",
   "authors":
   [
     {
@@ -15,7 +15,7 @@
     "type": "git",
     "url": "https://github.com/RobTillaart/HeartBeat.git"
   },
-  "version":"0.1.1",
+  "version":"0.1.2",
   "frameworks": "arduino",
   "platforms": "*"
 }

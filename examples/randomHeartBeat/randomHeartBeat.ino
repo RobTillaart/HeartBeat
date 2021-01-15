@@ -1,14 +1,16 @@
 //
 //    FILE: randomHeartBeat.ino
 //  AUTHOR: Rob Tillaart 
-// VERSION: 0.1.1
 // PURPOSE: demo
+
 
 #include "HeartBeat.h"
 
-Heartbeat HB;
+
+HeartBeat HB;
 
 uint32_t lastUpdate = 0;
+
 
 void setup() 
 {
@@ -18,6 +20,7 @@ void setup()
 
   HB.begin(13, 1);
 }
+
 
 void loop()
 {
