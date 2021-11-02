@@ -49,7 +49,7 @@ unittest_teardown()
 
 unittest(test_constructor)
 {
-  fprintf(stderr, "VERSION: %s\n", HEARTBEAT_LIB_VERSION );
+  fprintf(stderr, "VERSION: %s\n", (char *) HEARTBEAT_LIB_VERSION );
 
   GodmodeState* state = GODMODE();
   state->reset();
