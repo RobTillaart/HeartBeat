@@ -84,7 +84,7 @@ unittest(test_frequency)
   HeartBeat HB;
   HB.begin(13, 4);
   
-  assertEqualFloat(4, HB.getFRequency(), 0.001);
+  assertEqualFloat(4, HB.getFrequency(), 0.001);
   for (int fr = 1; fr < 10; fr++)
   {
     HB.setFrequency(fr);
