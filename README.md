@@ -26,9 +26,6 @@ can be used as a first level debugging tool. Different frequencies can indicate
 a different state of the program or a different level of some sensor.
 No heart beat indicates the program is stuck or blocked.
 
-The current version does not allow to differ the ON and OFF time,
-this might be an option in a future version.
-
 For more complex patterns, please check my pulsePattern library.
 
 
