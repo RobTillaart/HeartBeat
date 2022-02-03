@@ -28,6 +28,9 @@ public:
   inline void enable()  { _running = true;  };
   inline void disable() { _running = false; };
 
+  bool   errorCode(char * str);
+  void   errorCodeOff() { _errorCodeMask = 0; };
+
   void    beat();
   uint8_t getState()    { return _state; };
 
@@ -44,6 +47,12 @@ protected:
   bool     _running        = false;
   uint8_t  _pin            = 255;
   uint8_t  _state          = LOW;
+
+  uint8_t  _errorCode      = 0;
+  uint8_t  _errorCodeMask  = 0;
+  uint8_t  _errorPosition  = 0;
+  uint8_t  _errorCodeStart = 0;
+  uint8_t  _pulseLength    = 0;
 };
 
 

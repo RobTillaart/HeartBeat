@@ -56,25 +56,84 @@ void HeartBeat::setDutyCycle(float dutyCycle)
 
 void HeartBeat::beat()
 {
-  if (_running == false) 
+  if (_errorCodeMask == 0)  // normal mode
   {
-    _state = LOW;
+    _errorCodeStart = 0;
+    if (_running == false) 
+    {
+      _state = LOW;
+    }
+    else
+    {
+      uint32_t now = micros();
+      if ((_state == LOW)  && (now - _lastHeartBeat) < _dutyCycleLow)  return;
+      if ((_state == HIGH) && (now - _lastHeartBeat) < _dutyCycleHigh) return;
+      _lastHeartBeat = now;
+      _state = !_state;
+    }
   }
-  else
+  else  // _errorCode mode
   {
-    uint32_t now = micros();
-    if ((_state == LOW)  && (now - _lastHeartBeat) < _dutyCycleLow)  return;
-    if ((_state == HIGH) && (now - _lastHeartBeat) < _dutyCycleHigh) return;
-    _lastHeartBeat = now;
-    _state = !_state;
+    if (_errorCodeStart == 0)
+    {
+      _errorCodeStart  = 1;
+      _lastHeartBeat = micros();
+      _state = LOW;
+    }
+    else
+    {
+      // time for next pulse
+      uint32_t period = (_dutyCycleLow + _dutyCycleHigh)/2;
+      uint32_t now = micros();
+      if ((now - _lastHeartBeat) < period) return;
+      _lastHeartBeat = now;
+      if (_state == LOW)
+      {
+        _pulseLength = 1;
+        if (_errorCode & _errorCodeMask) // HIGH
+        {
+          _pulseLength = 3;
+        }
+        _errorCodeMask >>= 1;
+        _state = HIGH;
+      }
+      else
+      {
+        _pulseLength--;
+        if (_pulseLength == 0)
+        {
+          _state = LOW;
+        }
+      }
+    }
   }
   digitalWrite(_pin, _state);
 }
 
 
+bool HeartBeat::errorCode(char * str)
+{
+  if (_errorCodeMask > 0) return;
+
+  uint8_t len = strlen(str);
+  if (len > 8) return false;
+
+  _errorCode = 0;
+  _errorCodeMask = 0x01;
+  for (int i = 0; i < len; i++)
+  {
+    if (str[i] == 'L') _errorCode |= 1;
+    _errorCode <<= 1;
+    _errorCodeMask <<= 1;
+  }
+  return true;
+}
+
+
+
 /////////////////////////////////
 //
-//  PRIVATE
+//  PROTECTED
 //
 void HeartBeat::_setFreqDuty()
 {
