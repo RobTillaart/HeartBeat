@@ -7,7 +7,7 @@
 #include "HeartBeat.h"
 
 
-HeartBeat HB;
+HeartBeatDiag HB;
 
 bool flag = true;
 
@@ -25,7 +25,7 @@ void loop()
 {
   HB.beat();
 
-  if (millis() > 4000) HB.errorCode("LLSLL");
+  if (millis() > 4000) HB.errorCode("LSL");
   if (millis() > 20000) HB.errorCodeOff();
 }
 
