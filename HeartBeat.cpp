@@ -113,7 +113,7 @@ void HeartBeat::beat()
 
 bool HeartBeat::errorCode(char * str)
 {
-  if (_errorCodeMask > 0) return;
+  if (_errorCodeMask > 0) return false;
 
   uint8_t len = strlen(str);
   if (len > 8) return false;
