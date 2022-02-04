@@ -100,10 +100,11 @@ HeartBeatDiag::HeartBeatDiag():HeartBeat()
 {
 }
 
-
+/*
 void HeartBeatDiag::beat()
 {
-  if (_errorCodeMask == 0)  // normal mode
+  // normal mode
+  if (_errorCodeMask == 0)
   {
     _errorCodeStart = 0;
     HeartBeat::beat();
@@ -112,6 +113,7 @@ void HeartBeatDiag::beat()
   // _errorCode mode
   if (_errorCodeStart == 0)
   {
+    //  force a LOW first.
     _errorCodeStart = 1;
     _lastHeartBeat = micros();
     _state = LOW;
@@ -143,10 +145,13 @@ void HeartBeatDiag::beat()
   }
   digitalWrite(_pin, _state);
 }
+*/
 
 
+/*
 bool HeartBeatDiag::errorCode(const char * str)
 {
+  // already running an errorCode?
   if (_errorCodeMask > 0) return false;
 
   uint8_t len = strlen(str);
@@ -154,12 +159,74 @@ bool HeartBeatDiag::errorCode(const char * str)
 
   _errorCode = 0;
   _errorCodeMask = 0x01;
-  for (int i = 0; i < len; i++)
+  for (uint8_t i = 0; i < len; i++)
   {
     if (str[i] == 'L') _errorCode |= 1;
     _errorCode <<= 1;
     _errorCodeMask <<= 1;
   }
+  return true;
+}
+*/
+
+
+
+void HeartBeatDiag::beat()
+{
+  // normal mode
+  if (_errorCodeMask == 0)
+  {
+    _errorCodeStart = 0;
+    HeartBeat::beat();
+    return;
+  }
+  // _errorCode mode
+  if (_errorCodeStart == 0)
+  {
+    //  force a LOW first.
+    _errorCodeStart = 1;
+    _lastHeartBeat = micros();
+    _state = LOW;
+  }
+  else
+  {
+    uint32_t period = (_dutyCycleLow + _dutyCycleHigh)/2;
+    uint32_t now = micros();
+    if ((now - _lastHeartBeat) < period) return;
+    _lastHeartBeat = now;
+    if (_state == LOW)
+    {
+      while (_errorCodeMask > _errorCode)
+      {
+        _errorCodeMask /= 10;
+      }
+      if (_errorCodeMask == 0) return ;
+      _pulseLength = _errorCode / _errorCodeMask;
+      _errorCode -= _pulseLength * _errorCodeMask;
+      _state = HIGH;
+    }
+    else
+    {
+      Serial.println(_pulseLength);
+      _pulseLength--;
+      if (_pulseLength == 0)
+      {
+        _state = LOW;
+      }
+    }
+  }
+  digitalWrite(_pin, _state);
+}
+
+
+bool HeartBeatDiag::errorCode(uint32_t pattern)
+{
+  // already running an errorCode?
+  if (_errorCode > 0) return false;
+  if (pattern > 999999999) return false;
+
+  _errorCode = pattern;
+  _errorCodeMask = 100000000;
   return true;
 }
 

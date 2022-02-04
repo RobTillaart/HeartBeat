@@ -59,12 +59,13 @@ public:
 
   void   beat();
 
-  bool   errorCode(const char * str);             //  executes ONE time
+  // bool   errorCode(const char * str);             //  executes ONE time
+  bool   errorCode(uint32_t pattern);             //  executes ONE time
   void   errorCodeOff() { _errorCodeMask = 0; };  //  explicit stop.
 
 protected:
-  uint8_t  _errorCode      = 0;  //  bit pattern 1 = LONG 0 = SHORT
-  uint8_t  _errorCodeMask  = 0;  //  to extract the bit value from errorCode
+  uint32_t _errorCode      = 0;  //  bit pattern 1 = LONG 0 = SHORT
+  uint32_t _errorCodeMask  = 0;  //  to extract the bit value from errorCode
   uint8_t  _errorCodeStart = 0;  //  force starting with LOW
   uint8_t  _pulseLength    = 0;  //  to track length of current pulse
 };

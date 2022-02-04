@@ -25,7 +25,7 @@ void loop()
 {
   HB.beat();
 
-  if (millis() > 4000) HB.errorCode("LSL");
+  if (millis() > 2000) HB.errorCode(123454321);
   if (millis() > 20000) HB.errorCodeOff();
 }
 
