@@ -2,7 +2,7 @@
 //
 //    FILE: HeartBeat.h
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.2.1
+// VERSION: 0.3.0
 // PURPOSE: Arduino library for HeartBeat with frequency and dutyCycle
 //    DATE: 2019-06-12
 //     URL: https://github.com/RobTillaart/HeartBeat
@@ -10,7 +10,7 @@
 
 #include "Arduino.h"
 
-#define HEARTBEAT_LIB_VERSION       (F("0.2.1"))
+#define HEARTBEAT_LIB_VERSION       (F("0.3.0"))
 
 
 class HeartBeat
@@ -59,15 +59,16 @@ public:
 
   void   beat();
 
-  // bool   errorCode(const char * str);             //  executes ONE time
-  bool   errorCode(uint32_t pattern);             //  executes ONE time
-  void   errorCodeOff() { _errorCodeMask = 0; };  //  explicit stop.
+  //  pattern = up to 9 digits, indicating the relative length of the pulses
+  //            of the error or diagnostic code
+  bool   code(uint32_t pattern);        //  executes ONE time
+  void   codeOff() { _codeMask = 0; };  //  explicit stop.
 
 protected:
-  uint32_t _errorCode      = 0;  //  bit pattern 1 = LONG 0 = SHORT
-  uint32_t _errorCodeMask  = 0;  //  to extract the bit value from errorCode
-  uint8_t  _errorCodeStart = 0;  //  force starting with LOW
-  uint8_t  _pulseLength    = 0;  //  to track length of current pulse
+  uint32_t _code        = 0;  //  up to 9 digits 
+  uint32_t _codeMask    = 0;  //  to extract the bit value from code
+  uint8_t  _codeStart   = 0;  //  force starting with LOW
+  uint8_t  _pulseLength = 0;  //  to track length of current pulse
 };
 
 

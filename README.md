@@ -13,7 +13,9 @@ Arduino library for a HeartBeat with frequency and duty cycle.
 
 ## Description
 
-The heartbeat library offers a simple HeartBeat by sending pulses to 
+### HeartBeat
+
+The **HeartBeat** library offers a simple heart beat by sending pulses to 
 a digital pin. Typical usage is to blink a (built in) LED as indicator 
 a program is still alive.
 
@@ -26,12 +28,36 @@ can be used as a first level debugging tool. Different frequencies can indicate
 a different state of the program or a different level of some sensor.
 No heart beat indicates the program is stuck or blocked.
 
+
+### HeartBeatDiag
+
+Since version 0.3.0 a derived class **HeartBeatDiag** is added which can  
+send diagnostic or error patterns.
+A pattern exists of 1 to 9 HIGH pulses separated by a fixed length LOW pulse.
+The (relative) length of the HIGH pulses can be coded between 1 to 9.
+An example of an SOS pattern is 111333111.
+The unit length of the base pulse is determined by the frequency.
+
+If a pattern is started it cannot be overwritten until it is either ready or explicitly stopped. 
+If one wants to repeat a pattern the application has to repeat the call.
+
+To keep patterns recognizable one can exaggerate the difference in length.
+121 is harder to differentiate than 131, a rule of thumb is to use multiples 
+of 3 (1, 3, 6 and 9) as length.
+
+Many applications only need 2 lengths, short and long (BIOS alike), but the interface allows more. One could start with an extra long HIGH to indicate 
+the start of a pattern or to get attention (think buzzzzzzzer).
+The variable length can also be used to indicate a level of a measurement.
+
+
 For more complex patterns, please check my pulsePattern library.
 
 
 ## Interface
 
-The interface consists of the following functions:
+### HeartBeat
+
+The interface of the base **HeartBeat** consists of the following functions:
 
 - **HeartBeat()** constructor
 - **void begin(uint8_t pin, float frequency)** to configure the HeartBeat. 
@@ -55,9 +81,37 @@ Not calling **beat()** effectively stops the heartbeat.
 Useful for debugging.
 
 
-#### Obsolete
+### HeartBeatDiag
 
-- **set(float freq)** is replaced by **setFrequency()**.
+The interface of **HeartBeatDiag** adds of the following functions:
+
+- **HeartBeatDiag()** constructor
+- **bool code(uint32_t pattern)** executes the pattern ONE time. 
+Repeating the pattern means repeating the call. 
+- **void codeOff()** explicitly stops the pattern. Forced stop.
+
+
+Minimal example
+```cpp
+HeartBeatDiag HB;
+
+void setup() 
+{
+  HB.begin(13, 3);  // PIN 13 with frequency 3
+
+  // other setup here
+}
+
+
+void loop()
+{
+  HB.beat();
+  if (some_error) HB.code(6113);  // ==> L HHHHHH L H L H L HHH 
+
+  // other code here
+}
+```
+
 
 
 ## Applications
@@ -75,6 +129,9 @@ Applications include but are not limited to
 - Geiger counter style.
 
 
+With the HeartBeatDiag one can give different "messages" depending on the state.
+
+
 ## Operation
 
 See examples
@@ -82,7 +139,7 @@ See examples
 
 ## Future
 
-- improve documentation
 - add examples
+- test HeartBeatDiag version in more detail.
 - 
 
