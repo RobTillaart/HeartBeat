@@ -29,6 +29,18 @@ a different state of the program or a different level of some sensor.
 No heart beat indicates the program is stuck or blocked.
 
 
+### HeartBeatSL
+
+Since version 0.3.0 a derived class **HeartBeatSL** is added which can  
+send diagnostic or error patterns.
+A pattern exists of 1 to 7 HIGH pulses separated by a fixed length LOW pulse.
+The length of the HIGH pulses can be coded with S and L (short and long).
+The unit length of the base pulse is determined by the frequency.
+
+If a pattern is started it cannot be overwritten until it is either ready or explicitly stopped. 
+If one wants to repeat a pattern the application has to repeat the call.
+
+
 ### HeartBeatDiag
 
 Since version 0.3.0 a derived class **HeartBeatDiag** is added which can  
@@ -49,6 +61,7 @@ Many applications only need 2 lengths, short and long (BIOS alike), but the inte
 the start of a pattern or to get attention (think buzzzzzzzer).
 The variable length can also be used to indicate a level of a measurement.
 
+HeartBeatDiag uses more RAM and PROGMEM than HeartBeatSL.
 
 For more complex patterns, please check my pulsePattern library.
 
@@ -81,6 +94,39 @@ Not calling **beat()** effectively stops the heartbeat.
 Useful for debugging.
 
 
+### HeartBeatSL
+
+The interface of **HeartBeatSL** adds of the following functions to **HeartBeat**:
+
+- **HeartBeatSL()** constructor
+- **bool code(const char \* str)** executes the pattern ONE time. 
+Repeating the pattern means repeating the call. 
+The max supported string length is **7**.
+- **void codeOff()** explicitly stops the pattern. Forced stop.
+
+
+Minimal example
+```cpp
+HeartBeatSL HB;
+
+void setup() 
+{
+  HB.begin(13, 3);  // PIN 13 with frequency 3
+
+  // other setup here
+}
+
+
+void loop()
+{
+  HB.beat();
+  if (some_error) HB.code("LSSLSL");  // ==> L HHHHHH L H L H L HHH 
+
+  // other code here
+}
+```
+
+
 ### HeartBeatDiag
 
 The interface of **HeartBeatDiag** adds of the following functions:
@@ -88,6 +134,7 @@ The interface of **HeartBeatDiag** adds of the following functions:
 - **HeartBeatDiag()** constructor
 - **bool code(uint32_t pattern)** executes the pattern ONE time. 
 Repeating the pattern means repeating the call. 
+The max supported pattern length is **9**.
 - **void codeOff()** explicitly stops the pattern. Forced stop.
 
 
@@ -113,7 +160,6 @@ void loop()
 ```
 
 
-
 ## Applications
 
 Applications include but are not limited to
@@ -128,8 +174,8 @@ Applications include but are not limited to
 - indicate a changing distant - increasing or decreasing.
 - Geiger counter style.
 
-
-With the HeartBeatDiag one can give different "messages" depending on the state.
+With the HeartBeatDiag and HeartBeatSL one can give different more specific "messages" 
+depending on the state of the application or a sensor.
 
 
 ## Operation

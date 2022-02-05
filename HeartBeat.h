@@ -72,5 +72,30 @@ protected:
 };
 
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// HEARTBEATSL  (simpler, has a smaller footprint as HeartBeatDiag
+//
+class HeartBeatSL : public HeartBeat
+{
+public:
+  HeartBeatSL();
+
+  void   beat();
+
+  //  str = string of L (long) and S or non-L (short) characters.
+  //        L is a pulse of 3 units, S is a pulse of 1 unit.
+  bool   code(const char * str);        //  executes ONE time
+  void   codeOff() { _codeMask = 0; };  //  explicit stop.
+
+protected:
+  uint8_t _code        = 0;  //  up to 9 digits 
+  uint8_t _codeMask    = 0;  //  to extract the bit value from code
+  uint8_t _codeStart   = 0;  //  force starting with LOW
+  uint8_t _pulseLength = 0;  //  to track length of current pulse
+};
+
+
 // -- END OF FILE --
 

@@ -157,16 +157,23 @@ bool HeartBeatDiag::code(uint32_t pattern)
 }
 
 
-/*
+/////////////////////////////////////////////////////////////////////////////
+//
+// HEARTBEATSL
+//
+// string LS version is simpler and somewhat smaller footprint,
+//
 
-// string LS version which is much simpler and almost an equal footprint,
-// might become available later as HeartBeatSL()
-
-#define HEARTBEATDIAG_SHORT     1
-#define HEARTBEATDIAG_LONG      4
+#define HEARTBEATSL_SHORT     1
+#define HEARTBEATSL_LONG      3
 
 
-void HeartBeatDiag::beat()
+HeartBeatSL::HeartBeatSL():HeartBeat()
+{
+}
+
+
+void HeartBeatSL::beat()
 {
   // normal mode
   if (_codeMask == 0)
@@ -191,16 +198,17 @@ void HeartBeatDiag::beat()
     _lastHeartBeat = now;
     if (_state == LOW)
     {
-      _pulseLength = HEARTBEATDIAG_SHORT;
+      _pulseLength = HEARTBEATSL_SHORT;
       if (_code & _codeMask)  // 1 ==> LONG
       {
-        _pulseLength = HEARTBEATDIAG_LONG;
+        _pulseLength = HEARTBEATSL_LONG;
       }
       _codeMask >>= 1;
       _state = HIGH;
     }
     else
     {
+      // Serial.println(_pulseLength);
       _pulseLength--;
       if (_pulseLength == 0)
       {
@@ -212,14 +220,13 @@ void HeartBeatDiag::beat()
 }
 
 
-bool HeartBeatDiag::code(const char * str)
+bool HeartBeatSL::code(const char * str)
 {
   // already running an errorCode?
   if (_codeMask > 0) return false;
 
   uint8_t len = strlen(str);
   if (len > 7) return false;
-
   _code = 0;
   _codeMask = 0x01;
   for (uint8_t i = 0; i < len; i++)
@@ -230,7 +237,6 @@ bool HeartBeatDiag::code(const char * str)
   }
   return true;
 }
-*/
 
 
 // -- END OF FILE --
