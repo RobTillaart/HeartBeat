@@ -17,7 +17,8 @@
 //                      add getState().
 //                      removed set()
 //  0.2.1   2021-12-18  update library.json, license, minor edits
-//  0.3.0   2022-02-04  added HeartBeatDiag derived class.
+//  0.3.0   2022-02-04  added HeartBeatDiag class.
+//                      added HeartBeatSL class (slightly simpler).
 
 
 #include "HeartBeat.h"
@@ -132,7 +133,6 @@ void HeartBeatDiag::beat()
     }
     else
     {
-      //  Serial.println(_pulseLength);
       _pulseLength--;
       if (_pulseLength == 0)
       {
@@ -208,7 +208,6 @@ void HeartBeatSL::beat()
     }
     else
     {
-      // Serial.println(_pulseLength);
       _pulseLength--;
       if (_pulseLength == 0)
       {
@@ -224,16 +223,16 @@ bool HeartBeatSL::code(const char * str)
 {
   // already running an errorCode?
   if (_codeMask > 0) return false;
-
+  // pattern too long
   uint8_t len = strlen(str);
   if (len > 7) return false;
-  _code = 0;
-  _codeMask = 0x01;
+
+  _code      = 0;
+  _codeMask  = 1 << len;
   for (uint8_t i = 0; i < len; i++)
   {
     if (str[i] == 'L') _code |= 1;
     _code <<= 1;
-    _codeMask <<= 1;
   }
   return true;
 }

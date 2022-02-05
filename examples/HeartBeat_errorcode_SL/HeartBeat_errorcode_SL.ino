@@ -16,7 +16,7 @@ void setup()
   Serial.println(__FILE__);
   Serial.println(HEARTBEAT_LIB_VERSION);
 
-  HB.begin(13, 3);  // PIN 13 with frequency 3
+  HB.begin(13, 1);  // PIN 13 with frequency 3
 
   // make heartbeat invisible
   HB.disable();
