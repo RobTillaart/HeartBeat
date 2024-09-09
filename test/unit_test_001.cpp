@@ -111,7 +111,7 @@ unittest(test_HBDIAG)
   HBD.begin(13, 1);
 
   //  verify default value
-  isTrue(HBD.codeCompleted());
+  assertTrue(HBD.codeCompleted());
 }
 
 
@@ -121,7 +121,7 @@ unittest(test_HBSL)
   HBD.begin(13, 1);
 
   //  verify default value
-  isTrue(HBD.codeCompleted());
+  assertTrue(HBD.codeCompleted());
 }
 
 
