@@ -39,7 +39,7 @@ No heart beat indicates the program is stuck or blocked.
 
 Since version 0.3.0 a derived class **HeartBeatSL** is added which can  
 send specific diagnostic or error patterns.
-A pattern exists of 1 to 7 HIGH pulses separated by a fixed length LOW pulse.
+A pattern exists of 1 to 15 HIGH pulses separated by a fixed length LOW pulse.
 The length of the HIGH pulses can be coded with characters S and L (short and long).
 An example of an SOS pattern is "SLS".
 The unit length of the base pulse is determined by the frequency.
@@ -89,7 +89,6 @@ For more complex patterns, please check my pulsePattern library.
 #include "HeartBeat.h"
 ```
 
-
 ### HeartBeat
 
 The interface of the base **HeartBeat** consists of the following functions:
@@ -98,25 +97,33 @@ The interface of the base **HeartBeat** consists of the following functions:
 - **void begin(uint8_t pin, float frequency = 1.0)** to configure the HeartBeat.
 The output pin should be unique.
 The default frequency is 1.0.
-- **void setFrequency(float frequency = 1.0)** change the frequency of the pulsing.
-The default frequency is 1.0.
-Setting the frequency will not enable or disable the HeartBeat.  
-The frequency must be > 0.001 otherwise it will be constrained to 0.001.
-On the upper side values beyond 10 Hz are hard for humans but are allowed.
-- **void setDutyCycle(float dutyCycle = 50)** duty cycle in percentage time HIGH.
-The default duty cycle = 50 %.
-The duty cycle must be between 0.0 and 100.0 %.  
-A value of 0 will put the heartbeat effectively off.
-- **float getFrequency()** returns set frequency (or constrained value).
-- **float getDutyCycle()** returns set duty cycle (or constrained value).
-- **void enable()** enables the heart beat.
-- **void disable()** disable the heart beat. Will switch the pin to LOW.
-- **bool isEnabled()** returns true if the heart beat is enabled (running).
 - **void beat()** the worker; this function checks if the HeartBeat is enabled 
 and the OUTPUT (LED) must be toggled.  
 It must be called as often as possible to keep a steady pace,
 preferably at least 4 times the given frequency.  
 Not calling **beat()** effectively stops the heartbeat.
+
+
+### Frequency and duty cycle
+
+- **void setFrequency(float frequency = 1.0)** change the frequency of the pulsing.
+The default frequency is 1.0.
+Setting the frequency will not enable or disable the HeartBeat.  
+The frequency must be > 0.001 otherwise it will be constrained to 0.001.
+On the upper side values beyond 10 Hz are hard for humans but are allowed.
+- **float getFrequency()** returns set frequency (or constrained value).
+- **void setDutyCycle(float dutyCycle = 50)** duty cycle in percentage time HIGH.
+The default duty cycle = 50 %.
+The duty cycle must be between 0.0 and 100.0 %.  
+A value of 0 will put the heartbeat effectively off.
+- **float getDutyCycle()** returns set duty cycle (or constrained value).
+
+
+### Status
+
+- **void enable()** enables the heart beat.
+- **void disable()** disable the heart beat. Will switch the pin to LOW.
+- **bool isEnabled()** returns true if the heart beat is enabled (running).
 - **uint8_t getState()** returns the state of the heartbeat.
 Useful for debugging.
 
@@ -128,7 +135,7 @@ The interface of **HeartBeatSL** adds of the following functions to **HeartBeat*
 - **HeartBeatSL()** constructor.
 - **bool code(const char \* str)** executes the pattern ONE time. 
 Repeating the pattern means repeating the call. 
-The max supported string length is **7** as pattern is stored in a byte.
+The max supported string length is **15** as pattern is stored in a byte.
 - **void codeOff()** explicitly stops the pattern. Forced stop.
 - **bool codeCompleted()** returns true if pattern is executed completely.
 
@@ -165,7 +172,6 @@ void someOtherfunction()
 ```
 
 Note: a code will be executed, even if the HB is disabled.
-
 
 
 ### HeartBeatDiag
@@ -242,18 +248,16 @@ See examples
 #### Should
 
 - add examples
-  - ACS712 current sensor
   - buffer % filled (e.g. stream)
 
 #### Could
 
 - investigate a pattern recognizer (fun)
   - e.g. with an LDR or lux sensor.
-- HeartBeatSL
-  - extend code length to 16 (bit)?
 
 #### Wont
 
+- add **setColor(r, g, b)** for 8 colour heartbeat (no PWM)
 
 ## Support
 
