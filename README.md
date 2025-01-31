@@ -41,7 +41,7 @@ Since version 0.3.0 a derived class **HeartBeatSL** is added which can
 send specific diagnostic or error patterns.
 A pattern exists of 1 to 15 HIGH pulses separated by a fixed length LOW pulse.
 The length of the HIGH pulses can be coded with characters S and L (short and long).
-An example of an SOS pattern is "SLS".
+An example of an SOS alike pattern is "SSSLLLSSS".
 The unit length of the base pulse is determined by the frequency.
 
 If a pattern is started it cannot be overwritten until it is either ready
@@ -65,7 +65,8 @@ If one wants to repeat a pattern the application has to repeat the call.
 
 To keep patterns recognizable one can exaggerate the difference in length.
 121 is harder to differentiate than 131, a rule of thumb is to use multiples 
-of 3 (1, 3, 6 and 9) as length as it allows 4 length levels.
+of 3 (1, 3, 6 and 9) as length as it allows 4 length levels. Or use three 
+levels (1 5 9) to keep it recognizeable.
 
 Many applications only need 2 lengths, short and long (BIOS alike), 
 but the interface allows more. 
@@ -157,7 +158,10 @@ void setup()
 void loop()
 {
   HB.beat();
-  if (some_error) HB.code("LSSLSL");  // ==> L HHHHHH L H L H L HHH 
+  if (some_error) 
+  {
+    HB.code("LSSLSL");  // ==> L HHHHHH L H L H L HHHHHH L H L HHH
+  }
 
   // other code here
 }
@@ -252,12 +256,14 @@ See examples
 
 #### Could
 
+- HBSL: add R at the end for repeat?
 - investigate a pattern recognizer (fun)
   - e.g. with an LDR or lux sensor.
+- send Morse characters?
 
 #### Wont
 
-- add **setColor(r, g, b)** for 8 colour heartbeat (no PWM)
+- add **setColor(r, g, b)** for 8 colour RGBheartbeat (no PWM)
 
 ## Support
 
