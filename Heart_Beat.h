@@ -6,7 +6,7 @@
 //     URL: https://github.com/RobTillaart/HeartBeat
 
 
-//  wrapper include file with hard path for ESP32 Core 3.10 patch
+//  wrapper include file with hard path for ESP32 Core V3.1.0 patch
 //  see issue #15
 
 #include "./HeartBeat.h"

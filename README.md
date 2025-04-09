@@ -35,13 +35,14 @@ or a different level of some sensor.
 No heart beat indicates the program is stuck or blocked.
 
 
-### Conflict with ESP32 Core 3.10 (and up).
+### Conflict with ESP32 Core V3.1.0 (and up).
 
 See issue #15,
 
-ESP32 Core 3.10 added an include file that is also called **HeartBeat.h**.
-This causes a name conflict with this library. 
-The problem is solved in 0.3.6, the user should include **Heart_Beat.h**.
+**ESP32 Core V3.1.0** added an include file that is also called **HeartBeat.h**.
+This causes a name conflict with this library.
+
+The problem is solved in 0.3.6, the user should now include **Heart_Beat.h**.
 Note there is an extra underscore in the middle. 
 This is a wrapper with a hardcoded include path to force this library to
 be included. 
@@ -112,7 +113,7 @@ For more complex patterns, please check my pulsePattern library.
 ```
 or
 ```cpp
-#include "Heart_Beat.h"  //  for HeartBeat.h conflicts with ESP32 Core 3.10 and up.
+#include "Heart_Beat.h"  //  for HeartBeat.h conflicts with ESP32 Core V3.1.0 and up.
 ```
 
 ### HeartBeat

@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ## [0.3.6] - 2025-04-08
-- fix #15, Conflicting name with ESP Core 3.10
+- fix #15, Conflicting name with ESP Core V3.1.0
+- updated library.properties and library.json
 - update readme.md
 - add one Heart_Beat example
 
