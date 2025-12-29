@@ -12,8 +12,22 @@
 
 HeartBeat::HeartBeat()
 {
+    _lastNotifiedState = _state;
 }
 
+void HeartBeat::onStateChange(HeartBeatCallback cb)
+{
+    _callback = cb;
+}
+
+void HeartBeat::_notifyStateChange(uint8_t newState)
+{
+    if (_callback && newState != _lastNotifiedState)
+    {
+        _lastNotifiedState = newState;
+        _callback(newState);
+    }
+}
 
 void HeartBeat::begin(const uint8_t pin, float frequency)
 {
@@ -88,6 +102,7 @@ void HeartBeat::beat()
     _state = !_state;
   }
   digitalWrite(_pin, _state);
+  _notifyStateChange(_state);
 }
 
 
@@ -162,6 +177,7 @@ void HeartBeatDiag::beat()
     }
   }
   digitalWrite(_pin, _state);
+  _notifyStateChange(_state);
 }
 
 
@@ -250,6 +266,7 @@ void HeartBeatSL::beat()
     }
   }
   digitalWrite(_pin, _state);
+  _notifyStateChange(_state);
 }
 
 
