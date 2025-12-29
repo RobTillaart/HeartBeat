@@ -12,6 +12,7 @@
 
 #define HEARTBEAT_LIB_VERSION       (F("0.3.7"))
 
+typedef void (*HeartBeatCallback)(uint8_t state);
 
 class HeartBeat
 {
@@ -36,6 +37,8 @@ public:
   void    beat();
   uint8_t getState();
 
+	// CALLBACK
+	void onStateChange(HeartBeatCallback cb);
 
 protected:
   void     _setFreqDuty();
@@ -50,6 +53,11 @@ protected:
   bool     _running        = false;
   uint8_t  _pin            = 255;
   uint8_t  _state          = LOW;
+
+	void _notifyStateChange(uint8_t newState);
+
+	HeartBeatCallback _callback = nullptr;
+	uint8_t _lastNotifiedState = LOW;
 };
 
 
