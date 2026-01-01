@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.4.0] - 2026-01-01
 - fix #18/#20, add call back (kudos to AcuarioCat)
+- add examples
 - update GitHub actions
 - minor edits
 

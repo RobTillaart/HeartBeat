@@ -108,6 +108,7 @@ For more complex patterns, please check my pulsePattern library.
 
 ### Related
 
+- https://github.com/RobTillaart/Metronome
 - https://github.com/RobTillaart/pulsePattern
 
 
